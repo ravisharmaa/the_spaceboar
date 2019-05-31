@@ -2,23 +2,24 @@
 
 namespace App\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ArticleController
+class ArticleController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route ("/", name="homepage")
      *
      * @return Response
      */
     public function index()
     {
-        return new Response('This is my page');
+        return $this->render('articles/index.html.twig');
     }
 
     /**
-     * @Route("/show/{slug}")
+     * @Route ("/show/{slug}", name="show_article")
      *
      * @param $slug
      *
@@ -26,6 +27,14 @@ class ArticleController
      */
     public function show($slug)
     {
-        return new Response(sprintf('this is show %d', $slug));
+        $comments = [
+            'some random dymmy text'
+        ];
+
+        return $this->render('articles/show.html.twig', [
+            'comments' => $comments,
+            'slug' => $slug,
+            'title'=>'Hello world'
+        ]);
     }
 }
