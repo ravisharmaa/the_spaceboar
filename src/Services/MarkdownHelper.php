@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Michelf\MarkdownInterface;
 use Psr\Cache\InvalidArgumentException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Cache\Adapter\AdapterInterface;
 
 class MarkdownHelper
@@ -19,15 +20,22 @@ class MarkdownHelper
     protected $markdownInterface;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * MarkdownHelper constructor.
      *
      * @param AdapterInterface  $adapterInterface
      * @param MarkdownInterface $markdownInterface
+     * @param LoggerInterface   $logger
      */
-    public function __construct(AdapterInterface $adapterInterface, MarkdownInterface $markdownInterface)
+    public function __construct(AdapterInterface $adapterInterface, MarkdownInterface $markdownInterface, LoggerInterface $logger)
     {
         $this->adapterInterface = $adapterInterface;
         $this->markdownInterface = $markdownInterface;
+        $this->logger = $logger;
     }
 
     /**
@@ -44,6 +52,8 @@ class MarkdownHelper
         if (!$item->isHit()) {
             $item->set($this->markdownInterface->transform($source));
             $this->adapterInterface->save($item);
+
+            $this->logger->info('Cached Again');
         }
 
         return $item->get();
