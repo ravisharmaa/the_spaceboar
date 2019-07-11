@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Services\MarkdownHelper;
 use App\Services\SlackService;
-use Nexy\Slack\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,6 +40,7 @@ class ArticleController extends AbstractController
      *
      * @param $slug
      * @param MarkdownHelper $markdownHelper
+     *
      * @return Response
      *
      * @throws \Http\Client\Exception
