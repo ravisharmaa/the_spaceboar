@@ -1,2 +1,2 @@
 nexy_slack:
-  endpoint: 'https://test@slack.com'
+  endpoint: '%env(SLACK_WEBHOOK_ENDPOINT)%'

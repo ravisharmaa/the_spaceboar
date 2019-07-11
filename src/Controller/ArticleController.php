@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Services\MarkdownHelper;
+use App\Services\SlackService;
 use Nexy\Slack\Client;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,21 +11,19 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ArticleController extends AbstractController
 {
-
     /**
      * @var bool
      */
     private $isDebug;
     /**
-     * @var Client
+     * @var SlackService
      */
-    private $slackClient;
+    private $slackService;
 
-    public function __construct(bool $isDebug, Client $slackClient)
+    public function __construct(bool $isDebug, SlackService $slackService)
     {
-
         $this->isDebug = $isDebug;
-        $this->slackClient = $slackClient;
+        $this->slackService = $slackService;
     }
 
     /**
@@ -42,15 +41,14 @@ class ArticleController extends AbstractController
      *
      * @param $slug
      * @param MarkdownHelper $markdownHelper
-     *
-     * @param bool $isDebug
-     * @param Client $slackClient
      * @return Response
+     *
+     * @throws \Http\Client\Exception
      * @throws \Psr\Cache\InvalidArgumentException
      */
     public function show($slug, MarkdownHelper $markdownHelper)
     {
-        //dd($this->slackClient->send('hello world'));
+        //dd($this->slackService->sendMessage('John','Hello'));
 
         $comments = [
             'some random dymmy text',

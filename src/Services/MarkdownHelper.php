@@ -20,10 +20,6 @@ class MarkdownHelper
     protected $markdownInterface;
 
     /**
-     * @var LoggerInterface
-     */
-    protected $logger;
-    /**
      * @var bool
      */
     private $isDebug;
